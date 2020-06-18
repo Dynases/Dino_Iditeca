@@ -1196,15 +1196,18 @@ Public Class F0_Venta2
                 If (estado = 1) Then
                     CType(grdetalle.DataSource, DataTable).Rows(pos).Item("estado") = -1
                 End If
-                grdetalle.RootTable.ApplyFilter(New Janus.Windows.GridEX.GridEXFilterCondition(grdetalle.RootTable.Columns("estado"), Janus.Windows.GridEX.ConditionOperator.GreaterThanOrEqualTo, 0))
+
+                'grdetalle.RootTable.ApplyFilter(New Janus.Windows.GridEX.GridEXFilterCondition(grdetalle.RootTable.Columns("estado"), Janus.Windows.GridEX.ConditionOperator.GreaterThanOrEqualTo, -3))
                 _prCalcularPrecioTotal()
                 grdetalle.Select()
-                grdetalle.Col = 5
+                grdetalle.UpdateData()
+                grdetalle.Col = grdetalle.RootTable.Columns("yfcbarra").Index
                 grdetalle.Row = grdetalle.RowCount - 1
+                grdetalle.RootTable.ApplyFilter(New Janus.Windows.GridEX.GridEXFilterCondition(grdetalle.RootTable.Columns("estado"), Janus.Windows.GridEX.ConditionOperator.GreaterThanOrEqualTo, 0))
             End If
         End If
-        grdetalle.Refetch()
-        grdetalle.Refresh()
+        'grdetalle.Refetch()
+        'grdetalle.Refresh()
 
     End Sub
     Public Function _ValidarCampos() As Boolean
@@ -2324,13 +2327,6 @@ Public Class F0_Venta2
         btnGrabar.Enabled = True
         PanelNavegacion.Enabled = False
         tbNit.Select()
-        'btnNuevo.Enabled = False
-        'btnModificar.Enabled = False
-        'btnEliminar.Enabled = False
-        'GPanelProductos.Visible = False
-        '_prhabilitar()
-
-        '_Limpiar()
     End Sub
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
         _prSalir()
